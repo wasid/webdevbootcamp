@@ -1,0 +1,19 @@
+{
+  "name": "assignment",
+  "version": "1.0.0",
+  "description": "testing with dynamic routes in different way.",
+  "main": "app.js",
+  "scripts": {
+    "test": "testing with new express app"
+  },
+  "keywords": [
+    "express",
+    "basic",
+    "assignment"
+  ],
+  "author": "Wasid",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
