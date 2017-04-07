@@ -6,12 +6,23 @@ app.get("/", function(req, res){
     res.send("Hi There!");
 });
 
-app.get("/bye", function(req, res){
-    res.send("Bye There!");
+app.get("/test", function(req, res){
+    res.send("Test There!");
 });
 
-app.get("/cat", function(req, res){
-    res.send("Meow!");
+app.get("/todo/:task", function(req, res){
+    var todotask = req.params.task;
+    res.send("Task is: " + todotask );
+});
+
+app.get("/:animal/post/:title", function(req, res){
+    var animal = req.params.animal;
+    var title = req.params.title;
+    res.send( animal +" Post and title is:" + title);
+});
+
+app.get("*", function(req, res){
+    res.send("Route not Available!!!")
 });
 
 
