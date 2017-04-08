@@ -8,57 +8,33 @@ app.get("/", function(req, res){
 
 app.get("/speak/:animal", function(req, res){
     
-    var animal = req.params.animal;
-    
-    var sound = "";
-    
-    if (animal) {
-        
-        if (animal === "dog") {
-            
-            sound += "'woof woof'";
-            
-        } 
-        
-        else if(animal === "cat") {
-            
-            sound += "'Meow Meow!'";
-            
-        }
-        
-        else if(animal === "pig") {
-            
-            sound += "'Oink Oink!'";
-            
-        } 
-        
-        else{
-            
-            res.send("The "+animal+" is not in the list!");
-            
-        }
-        
-        res.send("The "+animal+" says "+ sound);
-        
-    } 
-    
-    else {
-        
-        res.send("Wrong Entry!");
-        
+    var sounds = {
+        pig: "Oink Oink",
+        cat: "Meow Meow",
+        cow: "Moo Moo",
+        dog: "Woof Woof"
     }
     
+    var animal = req.params.animal.toLowerCase();
+    
+    var sound = sounds[animal];
+    
+    res.send("The "+animal+" says '"+ sound + "'");
+    
+
 });
 
 app.get("/repeat/:word/:number", function(req, res){
     var word = req.params.word;
     var number = Number(req.params.number);
+    var result = "";
     
     console.log(number);
     
         for (var i = 1; i<=number; i++ ) {
-            res.send(word);
+            result += word+" ";
         }
+        res.send(result);
 });
 
 app.get("*", function(req, res){
