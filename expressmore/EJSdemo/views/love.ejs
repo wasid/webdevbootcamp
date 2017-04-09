@@ -1,3 +1,11 @@
 <h1>This is from love file!</h1>
 
 <h2>You fall in love with: <%= thingvar.toUpperCase() %></h2>
+
+<% if(thingvar.toLowerCase() === "javascript"){ %>
+    <p><%= thingvar %> Is the best choise!</p>
+<% } else {%>
+    
+    <p>You shoud choose JavaScript!</p>
+    
+<% }%>

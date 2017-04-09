@@ -1,0 +1,15 @@
+<h1>This is Posts page!</h1>
+
+<h3>Post List by for loop:</h3>
+<% for(var i = 0; i< posts.length; i++){ %>
+        
+        <li><%= posts[i].title %> - By: <strong><%= posts[i].author %></strong></li>
+
+<% } %>
+
+<h3>Post List by forEach:</h3>
+<% posts.forEach(function(post){ %>
+        
+        <li><%= post.title %> - By: <strong><%= post.author %></strong></li>
+
+<% }); %>
