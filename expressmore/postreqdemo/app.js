@@ -1,6 +1,10 @@
 var express = require("express");
 var app = express();
-app.use(express.static("public"));
+var bodyParser = require("body-parser");
+
+var friends = ["Ocean", "Wasid", "Hossain", "Nurul", "Ripon"];
+
+app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res){
@@ -9,16 +13,17 @@ app.get("/", function(req, res){
 
 
 app.post("/addfriend", function(req, res){
-    res.send("post route for friends");
+    var newfriend= req.body.newfriend;
+    friends.push(newfriend);
+    res.redirect("/friends");
 });
 
 app.get("/friends", function(req, res){
-    // var friends = req.params.thing;
-    var friends = ["Ocean", "Wasid", "Hossain", "Nurul", "Ripon"];
     res.render("friends", {friends: friends});
 });
 
 app.get("*", function(req, res){
+    
     res.send("Route not Available!!!")
 });
 
