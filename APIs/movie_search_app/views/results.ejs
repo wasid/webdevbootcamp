@@ -1,8 +1,12 @@
 <h1>Movie Titles</h1>
 
 <% result.Search.forEach(function(movie){ %>
-    
-    <li><%= movie.Title %> - <%= movie.Year %> - <%= movie.Type %> </li>
-
+    <ul>
+        <li>
+            <%= movie.Title %> - <%= movie.Year %> - <%= movie.Type %>
+        </li>
+    </ul>
 <% }); %>
+
+<a href="/">Back to Search again!</a>
 

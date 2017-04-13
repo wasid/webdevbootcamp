@@ -5,8 +5,14 @@ var request = require('request');
 app.set("view engine", "ejs");
 
 
+app.get("/", function(req, res){
+    res.render("search");
+});
+
 app.get("/results", function(req, res){
-    request('http://www.omdbapi.com/?s=prison', function (error, response, body) {
+    var searchfor = req.query.movie_name;
+    var url = 'http://www.omdbapi.com/?s=';
+    request(url + searchfor, function (error, response, body) {
       console.log('error:', error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       var persedData = JSON.parse(body);
