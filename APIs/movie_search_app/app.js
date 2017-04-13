@@ -10,10 +10,8 @@ app.get("/results", function(req, res){
       console.log('error:', error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       var persedData = JSON.parse(body);
-    //   console.log('body:', persedData['query']['results']['channel']['astronomy']['sunset']); // Print the HTML for the Google homepage.
-       // Print the HTML for the Google homepage.
       if (!error && response.statusCode == 200) {
-          res.send(persedData.Search[2].Title);
+          res.render("results", {result : persedData});
       }
     });
 });
