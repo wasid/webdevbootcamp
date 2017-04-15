@@ -16,13 +16,17 @@
                 <dv class="thumbnail">
                     <img src="<%= campground.image %>">
                 </dv>
-                <dv class="cption">
+                <dv class="caption">
                     <h4><%= campground.name %></h4>
                 </dv>
+                <a class="btn btn-default" href="/campgrounds/<%= campground._id %>">Info</a>
             </div>
             
     <% }); %>  
+
 </div>
-<a class="btn btn-info "href="/">Back to Lnding Page!</a>
+<div class="container">
+    <a class="btn btn-info "href="/">Back to Lnding Page!</a>
+</div>
 
 <% include partials/footer %>

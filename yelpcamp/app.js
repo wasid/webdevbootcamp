@@ -25,22 +25,22 @@ app.use(bodyParser.urlencoded({extended: true}));
 //         {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"}
 //     ];
     
-Campground.create(
+// Campground.create(
     
-    {
-        name: "Mountain Goat's Rest", 
-        image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg",
-        info: "Mountain Goat's Rest is the best campground for chilling with famiily and friends. Everyone should try this at least once in a year."
+//     {
+//         name: "Mountain Goat's Rest", 
+//         image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg",
+//         info: "Mountain Goat's Rest is the best campground for chilling with famiily and friends. Everyone should try this at least once in a year."
         
-    }, 
+//     }, 
 
-    function(err, newcamp){
-        if (err) {
-            console.log("Failed to save Campground to the DB!");
-        } else {
-            console.log("Campground saved to the DB!");
-        }
-});
+//     function(err, newcamp){
+//         if (err) {
+//             console.log("Failed to save Campground to the DB!");
+//         } else {
+//             console.log("Campground saved to the DB!");
+//         }
+// });
 
 
 app.get("/", function(req, res){
@@ -54,7 +54,7 @@ app.get("/campgrounds", function(req, res){
             console.log("Failed to fetch campgrounds data from the DB!");
             console.log(err);
         } else {
-            res.render("campgrounds", {campgrounds: allcamp});
+            res.render("index", {campgrounds: allcamp});
         }
     
     });
@@ -87,9 +87,15 @@ app.get("/campgrounds/new", function(req, res){
 });
 
 app.get("/campgrounds/:id", function(req, res){
-    
-
-    res.render("show");
+    var id = req.params.id
+    Campground.findById(id, function(err, getinfo){
+            if (err) {
+                console.log("Failed to get Campground info!");
+            } else {
+                
+                res.render("show", {campinfo: getinfo});
+            }
+    });
     
 });
 

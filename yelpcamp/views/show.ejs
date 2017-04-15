@@ -1,7 +1,12 @@
 <% include partials/header %>
 
-<h1>Show Indivisual info of YelpCamp!</h1>
+<h1><%= campinfo.name %></h1>
 
-<a class="btn btn-info "href="/">Back to Lnding Page!</a>
+<img src="<%= campinfo.image %>">
+
+<p><%= campinfo.info %></p>
+
+
+<a class="btn btn-info "href="/campgrounds">Back to Index Page!</a>
 
 <% include partials/footer %>
