@@ -10,10 +10,14 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 
 var campSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    info: String
 });
 
 var Campground = mongoose.model("Campground", campSchema);
+
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended: true}));
 
 // var campgrounds = [
 //         {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
@@ -21,26 +25,23 @@ var Campground = mongoose.model("Campground", campSchema);
 //         {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"}
 //     ];
     
-// Campground.create(
+Campground.create(
     
-//     {
-//         name: "Mountain Goat's Rest", 
-//         image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"
+    {
+        name: "Mountain Goat's Rest", 
+        image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg",
+        info: "Mountain Goat's Rest is the best campground for chilling with famiily and friends. Everyone should try this at least once in a year."
         
-//     }, 
+    }, 
 
-//     function(err, newcamp){
-//         if (err) {
-//             console.log("Failed to save Campground to the DB!");
-//         } else {
-//             console.log("Campground saved to the DB!");
-//             console.log(newcamp);
-//         }
-// });
+    function(err, newcamp){
+        if (err) {
+            console.log("Failed to save Campground to the DB!");
+        } else {
+            console.log("Campground saved to the DB!");
+        }
+});
 
-
-app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/", function(req, res){
     res.render("landing");
@@ -53,8 +54,6 @@ app.get("/campgrounds", function(req, res){
             console.log("Failed to fetch campgrounds data from the DB!");
             console.log(err);
         } else {
-            console.log("Campgrounds info:");
-            console.log(allcamp);
             res.render("campgrounds", {campgrounds: allcamp});
         }
     
@@ -66,14 +65,14 @@ app.post("/campgrounds", function(req, res){
     
     var name = req.body.name;
     var image = req.body.image;
-    var newCamp = {name:name, image:image}
+    var info = req.body.info;
+    var newCamp = {name:name, image:image, info:info}
     console.log(newCamp);
     Campground.create( newCamp, function(err, addedcamp){
             if (err) {
                 console.log("Failed to save Campground to the DB!");
             } else {
                 console.log("Campground saved to the DB!");
-                console.log(addedcamp);
                 res.redirect("/campgrounds");
             }
     });
@@ -84,6 +83,13 @@ app.get("/campgrounds/new", function(req, res){
     
 
     res.render("new");
+    
+});
+
+app.get("/campgrounds/:id", function(req, res){
+    
+
+    res.render("show");
     
 });
 
