@@ -1,0 +1,35 @@
+<% include partials/header %>
+
+<div class="ui main text container">
+    <div class="ui huge header">
+        <%= bloginfo.title %>
+        <div class="ui top attached segment">
+            <!--<div class="ui items">-->
+              <div class="item">
+                <div class="image">
+                  <img class="ui centered rounded image" src="<%= bloginfo.image %>">
+                </div>
+                <div class="content">
+                  <!--<a class="header">Header</a>-->
+                  <div class="meta">
+                    <span><%= bloginfo.created.toDateString() %></span>
+                  </div>
+                  <div class="description">
+                    <p><%= bloginfo.body %></p>
+                  </div>
+                  <!--<div class="extra">-->
+                  <!--  Additional Details-->
+                  <!--</div>-->
+                </div>
+              </div>
+            <!--</div>-->
+        </div>
+
+    
+    
+    
+    
+    <a class="ui inverted olive button" href="/blogs">Back to Blog Page!</a>
+</div>
+
+<% include partials/footer %>

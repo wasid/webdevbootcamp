@@ -76,6 +76,19 @@ app.post("/blogs", function(req, res){
     
 });
 
+app.get("/blogs/:id", function(req, res){
+    var id = req.params.id
+    Blog.findById(id, function(err, getinfo){
+            if (err) {
+                console.log("Failed to get Blog info!");
+            } else {
+                
+                res.render("show", {bloginfo: getinfo});
+            }
+    });
+    
+});
+
 
 
 app.listen(process.env.PORT, process.env.IP, function(){

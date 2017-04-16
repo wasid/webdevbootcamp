@@ -3,17 +3,24 @@
 <h1>Blog Page for RESTful BlogApp!</h1>
 
 <% blogs.forEach(function(blog){ %>
-                    
-            <div class="col-md-3 col-sm-6">
-                
-                <dv class="thumbnail">
-                    <img src="<%= blog.image %>">
-                </dv>
-                <dv class="caption">
-                    <h4><%= blog.title %></h4>
-                </dv>
-                <a class="btn btn-default" href="/campgrounds/<%= blog._id %>">Read more</a>
+        <div class="ui top attached segment">
+            <div class="ui items">
+              <div class="item">
+                <div class="image">
+                  <img class="ui centered rounded image" src="<%= blog.image %>">
+                </div>
+                <div class="content">
+                  <div class="meta">
+                    <span><%= blog.created.toDateString() %></span>
+                  </div>
+                  <div class="description">
+                    <p><%= blog.body.substring(0, 80) %>...</p>
+                    <a class="ui inverted violet button" href="/blogs/<%= blog._id %>">Read more</a>
+                  </div>
+                </div>
+              </div>
             </div>
+        </div>
             
 <% }); %>  
 
