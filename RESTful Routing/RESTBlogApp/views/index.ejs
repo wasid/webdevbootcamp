@@ -1,0 +1,14 @@
+<% blogs.forEach(function(blog){ %>
+                    
+            <div class="col-md-3 col-sm-6">
+                
+                <dv class="thumbnail">
+                    <img src="<%= blog.image %>">
+                </dv>
+                <dv class="caption">
+                    <h4><%= blog.title %></h4>
+                </dv>
+                <a class="btn btn-default" href="/campgrounds/<%= blog._id %>">Read more</a>
+            </div>
+            
+<% }); %>  
