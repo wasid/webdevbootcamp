@@ -50,6 +50,32 @@ app.get("/blogs", function(req, res){
     
 });
 
+app.get("/blogs/new", function(req, res){
+    
+
+    res.render("new");
+    
+});
+
+app.post("/blogs", function(req, res){
+    
+    var title = req.body.title;
+    var image = req.body.image;
+    var body = req.body.body;
+    var newPost = {title:title, image:image, body:body}
+    console.log(newPost);
+    Blog.create( newPost, function(err, addedpost){
+            if (err) {
+                console.log("Failed to save Post to the DB!");
+            } else {
+                console.log("Post saved to the DB!");
+                res.redirect("/blogs");
+            }
+    });
+    
+    
+});
+
 
 
 app.listen(process.env.PORT, process.env.IP, function(){
