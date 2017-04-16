@@ -14,11 +14,16 @@
                   <div class="meta">
                     <span><%= bloginfo.created.toDateString() %></span>
                   </div>
+                  <div class="extra">
+                    <a class="ui teal button" href="/blogs/<%= bloginfo._id %>/edit">Edit</a>
+                  </div>
                   <div class="description">
                     <p><%= bloginfo.body %></p>
                   </div>
                   <div class="extra">
-                    <a class="ui teal button" href="/blogs/<%= bloginfo._id %>/edit">Edit</a>
+                    <form class="ui form" action="/blogs/<%= bloginfo._id %>/delete" method="post">
+                      <button class="ui red button" type="submit">Delete</button>
+                    </form>
                   </div>
                 </div>
               </div>

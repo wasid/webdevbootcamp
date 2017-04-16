@@ -63,7 +63,7 @@ app.post("/blogs", function(req, res){
     var image = req.body.image;
     var body = req.body.body;
     var newPost = {title:title, image:image, body:body}
-    console.log(newPost);
+    
     Blog.create( newPost, function(err, addedpost){
             if (err) {
                 console.log("Failed to save Post to the DB!");
@@ -105,12 +105,12 @@ app.get("/blogs/:id/edit", function(req, res){
 app.post("/blogs/:id/update", function(req, res){
     
     var id = req.params.id
-    var title = req.body.title;
-    var image = req.body.image;
-    var body = req.body.body;
-    var editedbody = {title:title, image:image, body:body}
+    // var title = req.body.title;
+    // var image = req.body.image;
+    // var body = req.body.body;
+    // var editedbody = {title:title, image:image, body:body}
 
-    Blog.findByIdAndUpdate( id, editedbody, function(err, updatedpost){
+    Blog.findByIdAndUpdate( id, req.body.data, function(err, updatedpost){
             if (err) {
                 res.redirect("/blogs");
             } else {
@@ -120,6 +120,21 @@ app.post("/blogs/:id/update", function(req, res){
     });
     
     
+});
+
+app.post("/blogs/:id/delete", function(req, res){
+    
+    var id = req.params.id
+
+    Blog.findByIdAndRemove( id, function(err){
+            if (err) {
+                res.redirect("/blogs");
+            } else {
+                console.log("Post Deleted!");
+                res.redirect("/blogs");
+            }
+    });
+  
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
