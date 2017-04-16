@@ -89,7 +89,38 @@ app.get("/blogs/:id", function(req, res){
     
 });
 
+app.get("/blogs/:id/edit", function(req, res){
+    var id = req.params.id
+    Blog.findById(id, function(err, geteditinfo){
+            if (err) {
+                console.log("Failed to get edit post info!");
+            } else {
+                
+                res.render("edit", {editbloginfo: geteditinfo});
+            }
+    });
+    
+});
 
+app.post("/blogs/:id/update", function(req, res){
+    
+    var id = req.params.id
+    var title = req.body.title;
+    var image = req.body.image;
+    var body = req.body.body;
+    var editedbody = {title:title, image:image, body:body}
+
+    Blog.findByIdAndUpdate( id, editedbody, function(err, updatedpost){
+            if (err) {
+                res.redirect("/blogs");
+            } else {
+                console.log("Post updated!");
+                res.redirect("/blogs/"+id);
+            }
+    });
+    
+    
+});
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("BlogApp Server Has Started!!!")

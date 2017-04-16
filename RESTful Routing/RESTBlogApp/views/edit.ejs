@@ -2,20 +2,20 @@
 
 <div class="ui main text container segment">
     <div class="ui huge header">
-        New Blog Post
+        Edit <%= editbloginfo.title %>
     </div>
-    <form class="ui form" action="/blogs" method="post">
+    <form class="ui form" action="/blogs/<%= editbloginfo._id %>/update" method="post">
         <div class="field">
             <label>Post Title</label>
-            <input type="text" name="title" placeholder="Post Title">
+            <input type="text" name="title" value="<%= editbloginfo.title %>">
         </div>
         <div class="field">
             <label>Image URL</label>
-            <input type="text" name="image" placeholder="Image URL">
+            <input type="text" name="image" value="<%= editbloginfo.image %>">
         </div>
         <div class="field">
             <label>Post Body</label>
-            <textarea name="body" placeholder="Post Body" rows="4"></textarea>
+            <textarea name="body" rows="4"><%= editbloginfo.body %></textarea>
         </div>
           <button class="ui inverted blue button" type="submit">Submit</button>
     </form>
