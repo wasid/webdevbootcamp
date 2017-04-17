@@ -1,6 +1,7 @@
-var bodyParser  = require("body-parser"),
-    express     = require("express"),
-    app         = express();
+var bodyParser           = require("body-parser"),
+    expressSanitizer     = require("express-sanitizer"),
+    express              = require("express"),
+    app                  = express();
 
 // database connection
 var mongoose    = require("mongoose");
@@ -9,6 +10,7 @@ mongoose.connect("mongodb://localhost/restful_blog_app");
 // App Config
 app.set("view engine", "ejs"); // for user friendly view control
 app.use(bodyParser.urlencoded({extended: true})); // for getting form data
+app.use(expressSanitizer());
 app.use(express.static("public")); // for custom style
 
 // Model config
@@ -21,21 +23,12 @@ var blogSchema = new mongoose.Schema({
 
 var Blog = mongoose.model("Blog", blogSchema);
 
-// manually create post
-// Blog.create({
-    
-//     title: "First Blog Post",
-//     image: "https://farm5.staticflickr.com/4095/4857508633_86fb572818.jpg",
-//     body: "Blog post body is very important to attract the reader.",
-        
-//     })
-
-
-// RESTful Routes
+// Home
 app.get("/", function(req, res){
     res.redirect("/blogs");
 });
 
+// Home/All Posts
 app.get("/blogs", function(req, res){
     
     Blog.find({}, function(err, allblogs){
@@ -50,6 +43,7 @@ app.get("/blogs", function(req, res){
     
 });
 
+// Add new post form
 app.get("/blogs/new", function(req, res){
     
 
@@ -57,13 +51,16 @@ app.get("/blogs/new", function(req, res){
     
 });
 
+// Add new post
 app.post("/blogs", function(req, res){
     
     var title = req.body.title;
     var image = req.body.image;
-    var body = req.body.body;
-    var newPost = {title:title, image:image, body:body}
     
+    // req.body.body = req.sanitize(req.body.body);
+    var body = req.sanitize(req.body.body);
+    var newPost = {title:title, image:image, body:body}
+
     Blog.create( newPost, function(err, addedpost){
             if (err) {
                 console.log("Failed to save Post to the DB!");
@@ -76,6 +73,7 @@ app.post("/blogs", function(req, res){
     
 });
 
+// Show individual post
 app.get("/blogs/:id", function(req, res){
     var id = req.params.id
     Blog.findById(id, function(err, getinfo){
@@ -89,6 +87,7 @@ app.get("/blogs/:id", function(req, res){
     
 });
 
+// Update form
 app.get("/blogs/:id/edit", function(req, res){
     var id = req.params.id
     Blog.findById(id, function(err, geteditinfo){
@@ -102,14 +101,11 @@ app.get("/blogs/:id/edit", function(req, res){
     
 });
 
+// Update post
 app.post("/blogs/:id/update", function(req, res){
     
     var id = req.params.id
-    // var title = req.body.title;
-    // var image = req.body.image;
-    // var body = req.body.body;
-    // var editedbody = {title:title, image:image, body:body}
-
+    req.body.data.body = req.sanitize(req.body.data.body)
     Blog.findByIdAndUpdate( id, req.body.data, function(err, updatedpost){
             if (err) {
                 res.redirect("/blogs");
@@ -122,6 +118,7 @@ app.post("/blogs/:id/update", function(req, res){
     
 });
 
+// Delete post
 app.post("/blogs/:id/delete", function(req, res){
     
     var id = req.params.id

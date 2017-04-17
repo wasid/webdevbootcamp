@@ -1,27 +1,29 @@
 <% include partials/header %>
 
+<!--<div class="ui main text container">-->
 <h1>Blog Page for RESTful BlogApp!</h1>
 
-<% blogs.forEach(function(blog){ %>
-        <div class="ui top attached segment">
-            <div class="ui items">
-              <div class="item">
-                <div class="image">
-                  <img class="ui centered rounded image" src="<%= blog.image %>">
-                </div>
-                <div class="content">
-                  <div class="meta">
-                    <span><%= blog.created.toDateString() %></span>
-                  </div>
-                  <div class="description">
-                    <p><%= blog.body.substring(0, 80) %>...</p>
-                    <a class="ui inverted violet button" href="/blogs/<%= blog._id %>">Read more</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div class="ui top attached segment">
+    <div class="ui divided items">
+      <% blogs.forEach(function(blog){ %>
+      <div class="item">
+        <div class="image">
+          <img class="ui centered rounded image" src="<%= blog.image %>">
         </div>
-            
-<% }); %>  
+        <div class="content">
+          <a class="header"><%= blog.title %></a>
+          <div class="meta">
+            <span><%= blog.created.toDateString() %></span>
+          </div>
+          <div class="description">
+            <p><%= blog.body.substring(0, 80) %>...</p>
+            <a class="ui inverted violet button" href="/blogs/<%= blog._id %>">Read more</a>
+          </div>
+        </div>
+      </div>
+      <% }); %> 
+    </div>
+</div>
+<!--</div>-->
 
 <% include partials/footer %>
