@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue App 1</title>
+        <script type="text/javascript" src="https://unpkg.com/vue"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>-->
+        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" integrity="sha384-zF4BRsG/fLiTGfR9QL82DrilZxrwgY/+du4p/c7J72zZj+FLYq4zY00RylP9ZjiT" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container" id="app">
+               <button class="btn btn-info" @click="getinfo">Review the Secret Button</button> 
+               <!-- v-on: === @ -->
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    
+                    secretNum: Math.floor(Math.random() * 100) + 1
+                    
+                },
+                methods: {
+                    getinfo(){
+                        alert(`This Is Secret Number: ${this.secretNum}`);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
