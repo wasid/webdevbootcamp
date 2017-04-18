@@ -13,20 +13,36 @@
     </style>
     <body>
         <div class="container text-center" id="app">
-                <input type="text" v-model="text"/>
-                <p>Writteb text: {{showtext}}</p>
+              <h1>Counter: {{count}}</h1>
+              <button class="btn btn-primary" @click="counter">increment with Click</button> 
         </div>
         <script>
             
             var app = new Vue({
                 el: '#app',
                 data: {
-                    text:""
+                    count: 0
                 },
-                computed: {
-                    showtext(){
-                        return this.text
+                methods:{
+                    timeNow(){
+                       var datenow = new Date(Date.now());
+                       
+                       alert(`The Time is ${datenow.toTimeString()}`);
+                    },
+                    
+                    counter() {
+                        this.count++
                     }
+                },
+                created(){
+                    this.timeNow()
+                },
+                
+                mounted(){
+                    this.timeNow()
+                },
+                updated(){
+                    console.log(this.count)
                 }
             })
         </script>
