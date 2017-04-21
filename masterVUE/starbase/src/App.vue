@@ -1,25 +1,23 @@
 <template>
   <div id="app">
     <!--<img src="./assets/logo.png">-->
-    <h1>{{title}}</h1>
-    <button class="btn btn-success" @click="fetchdata">get info</button>
+    <h3>{{title}}</h3>
+    <!--<button class="btn btn-success" @click="fetchdata">Get Character Info</button>-->
+    <Character />
   </div>
 </template>
 
 <script>
+import Character from './components/Character.vue'
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       title: 'Generate your team'
     }
   },
-  methods: {
-    fetchdata(){
-      fetch("http://swapi.co/api/people/1", {
-        method:"GET"
-      }).then(respose => respose.json()).then(json => console.log(json))
-    }
+  components: {
+      Character
   }
 }
 </script>
