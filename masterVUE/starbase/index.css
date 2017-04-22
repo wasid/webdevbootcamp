@@ -3,7 +3,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: steelblue;
+  color: white;
   margin-top: 60px;
 }
 
@@ -23,4 +23,10 @@ li {
 
 a {
   color: #42b983;
+}
+
+.character-card{
+  border: 2px solid #4fc08d;
+  border-radius: 4px;
+  cursor: pointer;
 }
