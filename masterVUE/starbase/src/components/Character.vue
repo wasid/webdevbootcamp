@@ -1,29 +1,34 @@
 <template>
-    <div class="">
-        {{character}}
+    <div class="" @click="switchchar">
+        {{characterinfo}}
     </div>
 </template>
 <script>
     export default{
+        props: ['id'],
         data(){
             return{
-                character: {
-                    
-                }                
+                characterinfo: {}                
             }
         },
         methods: {
-            fetchdata(){
-              fetch("http://swapi.co/api/people/1", {
+            fetchdata(id) {
+              fetch(`http://swapi.co/api/people/${id}`, {
                 method:"GET"
               })
               .then(respose => respose.json())
-              .then(json => this.character = json)
+              .then(json => this.characterinfo = json)
+            },
+            
+            switchchar() {
+               let rand_id = Math.floor(Math.random() * 83) + 1
+               console.log(rand_id)
+               this.fetchdata(rand_id)
             }
         },
         
         created(){
-            this.fetchdata()
+            this.fetchdata(this.id)
         }
     }
 </script>
