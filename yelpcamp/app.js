@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+var Comment = require("./models/Comment");
 var Campground = require("./models/campground");
 var seedDB = require("./seed");
 
@@ -82,12 +83,12 @@ app.get("/campgrounds/new", function(req, res){
 });
 
 app.get("/campgrounds/:id", function(req, res){
-    var id = req.params.id
-    Campground.findById(id, function(err, getinfo){
+    var id = req.params.id;
+    Campground.findById(id).populate("comments").exec(function(err, getinfo){
             if (err) {
                 console.log("Failed to get Campground info!");
             } else {
-                
+                console.log(getinfo);
                 res.render("show", {campinfo: getinfo});
             }
     });
