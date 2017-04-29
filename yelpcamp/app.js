@@ -38,10 +38,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 //         }
 // });
 
+// Campground home route
 
 app.get("/", function(req, res){
     res.render("landing");
 });
+
+// Campground Route to get all campgrounds
 
 app.get("/campgrounds", function(req, res){
     
@@ -50,12 +53,14 @@ app.get("/campgrounds", function(req, res){
             console.log("Failed to fetch campgrounds data from the DB!");
             console.log(err);
         } else {
-            res.render("index", {campgrounds: allcamp});
+            res.render("campgrounds/index", {campgrounds: allcamp});
         }
     
     });
     
 });
+
+// Campground Route to create new campground using post
 
 app.post("/campgrounds", function(req, res){
     
@@ -75,12 +80,17 @@ app.post("/campgrounds", function(req, res){
     
     
 });
+
+// Campground form Route for adding new campground
+
 app.get("/campgrounds/new", function(req, res){
     
 
-    res.render("new");
+    res.render("campgrounds/new");
     
 });
+
+// Campground show Route for individual post
 
 app.get("/campgrounds/:id", function(req, res){
     var id = req.params.id;
@@ -88,11 +98,23 @@ app.get("/campgrounds/:id", function(req, res){
             if (err) {
                 console.log("Failed to get Campground info!");
             } else {
-                console.log(getinfo);
-                res.render("show", {campinfo: getinfo});
+                res.render("campgrounds/show", {campinfo: getinfo});
             }
     });
     
+});
+
+// Comment Route
+
+app.get("/campgrounds/:id/comments/new", function(req, res){
+    var id = req.params.id;
+    Campground.findById(id, function(err, campground){
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("comments/new", {campinfo: campground});
+            }
+    });
 });
 
 
