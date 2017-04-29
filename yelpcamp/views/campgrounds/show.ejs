@@ -10,12 +10,18 @@
 
 <h3>Comments</h3>
 
+<p>
+    <a class="btn btn-warning "href="/campgrounds/<%= campinfo._id %>/comments/new">Post a comment!</a>
+</p>
+
 <% campinfo.comments.forEach(function(comment){ %>
 
     <p><%= comment.text %> - <strong><%= comment.author %></strong></p>
 
 <% }) %>
 
-<a class="btn btn-info "href="/campgrounds">Back to Index Page!</a>
+<p>
+    <a class="btn btn-info "href="/campgrounds">Back to Index Page!</a>
+</p>
 
 <% include ../partials/footer %>

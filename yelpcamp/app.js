@@ -118,6 +118,27 @@ app.get("/campgrounds/:id/comments/new", function(req, res){
 });
 
 
+app.post("/campgrounds/:id/comments", function(req, res){
+    var id = req.params.id;
+    var comment = req.body.comment;
+    Campground.findById(id, function(err, campground){
+            if (err) {
+                console.log(err);
+            } else {
+                Comment.create(comment, function(err, createdcomment){
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        campground.comments.push(createdcomment);
+                        campground.save();
+                        res.redirect("/campgrounds/" + campground._id);
+                    }
+                });
+            }
+    });
+});
+
+
 
 
 app.listen(process.env.PORT, process.env.IP, function(){
