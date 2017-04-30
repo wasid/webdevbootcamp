@@ -1,27 +1,16 @@
 var mongoose    = require("mongoose");
+
 mongoose.connect("mongodb://localhost/blog_demo_2");
 
-var postSchema = new mongoose.Schema({
-    title: String,
-    content: String
-});
+var Post    = require("./models/post");
 
-var Post = mongoose.model("Post", postSchema);
+var User    = require("./models/user");
 
-var userSchema = new mongoose.Schema({
-    email: String,
-    name: String,
-    posts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post"
-    }]
-});
 
-var User = mongoose.model("User", userSchema);
 
 // Post.create({
-//     title: "Nice Title 3",
-//     content: "This post content 3."
+//     title: "Nice Title 4",
+//     content: "This post content 4."
 // }, function(err, addedPost){
 //     if (err) {
 //         console.log(err);
