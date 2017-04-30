@@ -1,27 +1,53 @@
 <% include ../partials/header %>
 
-<h1><%= campinfo.name %></h1>
+<div class="row">
+    <div class="col-md-3">
+        <p class="lead"><%= campinfo.name %></p>
+        <div class="list-group">
+            <li class="list-group-item active">First item</li>
+            <li class="list-group-item">Second item</li>
+            <li class="list-group-item">Third item</li>
+        </div>
+        <p>
+            <a class="btn btn-info "href="/campgrounds">Back to Index Page!</a>
+        </p>  
+    </div>
+    <div class="col-md-9">
+        <div class="thumbnail">
+            <img clas="img-responsive" src="<%= campinfo.image %>">
+            <div class="caption-full">
+                <h4 class="pull-right">$9.00/night</h4>    
+                <h4><a><%= campinfo.name %></a></h4>    
+                <p><%= campinfo.info %></p>    
+            </div>
+        </div>
+        <div class="well">
+            <div class="text-right">
+                <p>
+                    <a class="btn btn-warning "href="/campgrounds/<%= campinfo._id %>/comments/new">Post a comment!</a>
+                </p> 
+            </div>
+            
+            <hr>
+            
+            <% campinfo.comments.forEach(function(comment){ %>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong><%= comment.author %></strong>
+                        <span class="pull-right">10 days ago</span>
+                        <p><%= comment.text %></p>
+                    </div>
+                </div>
+                
+            
+            <% }) %>
 
-<img src="<%= campinfo.image %>">
+        </div>
+        
+    </div>
+</div>
 
-<h3>Info</h3>
 
-<p><%= campinfo.info %></p>
-
-<h3>Comments</h3>
-
-<p>
-    <a class="btn btn-warning "href="/campgrounds/<%= campinfo._id %>/comments/new">Post a comment!</a>
-</p>
-
-<% campinfo.comments.forEach(function(comment){ %>
-
-    <p><%= comment.text %> - <strong><%= comment.author %></strong></p>
-
-<% }) %>
-
-<p>
-    <a class="btn btn-info "href="/campgrounds">Back to Index Page!</a>
-</p>
 
 <% include ../partials/footer %>
