@@ -1,0 +1,15 @@
+body{
+    margin-bottom:50px;
+}
+
+.thumbnail{
+  padding: 0px;  
+}
+
+.thumbnail .caption-full{
+  padding: 9px;  
+}
+
+.thumbnail img{
+    width: 100%;
+}
