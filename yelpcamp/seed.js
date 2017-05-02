@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var Comment = require("./models/Comment");
+var Comment = require("./models/comment");
 var Campground = require("./models/campground");
 
 var data = [
