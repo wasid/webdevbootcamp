@@ -22,7 +22,7 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -57,6 +57,19 @@ app.post("/register", function(req, res){
             })
         }
     });
+});
+
+// Log in form
+app.get("/login", function(req, res){
+    res.render("login");
+});
+
+// Handle Log in
+// middleware
+app.post("/login", passport.authenticate("local", {
+        successRedirect: "/secret",
+        failureRedirect: "/login"
+    }), function(req, res){
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
