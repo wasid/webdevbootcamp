@@ -26,6 +26,21 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public")); // for custom style
 
+// Passport Config
+
+app.use(require("express-session")({
+   secret: "Again Ocean can be a great programmer.",
+   resave: false,
+   saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new passportLocal(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // var campgrounds = [
 //         {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
 //         {name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
@@ -150,6 +165,30 @@ app.post("/campgrounds/:id/comments", function(req, res){
 });
 
 
+// Registration Route
+
+// Sign up form
+app.get("/register", function(req, res){
+    res.render("register");
+});
+
+// Handle Sign up
+app.post("/register", function(req, res){
+    
+    var newusername = new User({username: req.body.username});
+    var newpassword = req.body.password;
+
+    User.register(newusername, newpassword, function(err, user){
+        if (err) {
+            console.log(err);
+            return res.render("/register");
+        } else {
+            passport.authenticate("local")(req, res,  function(){
+                res.redirect("/campgrounds");
+            })
+        }
+    });
+});
 
 
 app.listen(process.env.PORT, process.env.IP, function(){
