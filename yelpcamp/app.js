@@ -88,7 +88,7 @@ app.get("/campgrounds", function(req, res){
 
 // Campground Route to create new campground using post
 
-app.post("/campgrounds", function(req, res){
+app.post("/campgrounds", isSingedin, function(req, res){
     
     var name = req.body.name;
     var image = req.body.image;
@@ -109,7 +109,7 @@ app.post("/campgrounds", function(req, res){
 
 // Campground form Route for adding new campground
 
-app.get("/campgrounds/new", function(req, res){
+app.get("/campgrounds/new", isSingedin, function(req, res){
     
 
     res.render("campgrounds/new");
@@ -132,7 +132,7 @@ app.get("/campgrounds/:id", function(req, res){
 
 // Comment Route
 
-app.get("/campgrounds/:id/comments/new", function(req, res){
+app.get("/campgrounds/:id/comments/new", isSingedin, function(req, res){
     var id = req.params.id;
     Campground.findById(id, function(err, campground){
             if (err) {
@@ -144,7 +144,7 @@ app.get("/campgrounds/:id/comments/new", function(req, res){
 });
 
 
-app.post("/campgrounds/:id/comments", function(req, res){
+app.post("/campgrounds/:id/comments", isSingedin, function(req, res){
     var id = req.params.id;
     var comment = req.body.comment;
     Campground.findById(id, function(err, campground){
@@ -203,7 +203,24 @@ app.post("/login", passport.authenticate("local", {
     }), function(req, res){
 });
 
+// Log Out
+app.get("/logout", function(req, res){
+    req.logout();
+    console.log("Log Out Done!")
+    res.redirect("/campgrounds");
+});
+
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("YelpCamp Server Has Started!!!")
 });
+
+// Custom Middleware Function
+
+function isSingedin(req, res, next){
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.redirect("/login");
+    }
+}
