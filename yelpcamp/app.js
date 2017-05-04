@@ -36,6 +36,11 @@ app.use(require("express-session")({
 
 app.use(passport.initialize());
 app.use(passport.session());
+// Passing logged in user to every routes
+app.use(function(req, res, next){
+    res.locals.loggedinuser = req.user;
+    next();
+});
 
 passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -224,3 +229,4 @@ function isSingedin(req, res, next){
         res.redirect("/login");
     }
 }
+
