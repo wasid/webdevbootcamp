@@ -25,11 +25,15 @@ router.post("/", isSingedin, function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var info = req.body.info;
-    var newCamp = {name:name, image:image, info:info};
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newCamp = {name:name, image:image, info:info, author:author};
     console.log(newCamp);
     Campground.create( newCamp, function(err, addedcamp){
             if (err) {
-                console.log("Failed to save Campground to the DB!");
+                console.log(err);
             } else {
                 console.log("Campground saved to the DB!");
                 res.redirect("/campgrounds");
