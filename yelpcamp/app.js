@@ -11,7 +11,7 @@ var express               = require("express"),
 
     seedDB                = require("./seed");
     
-    seedDB();
+    // seedDB(); //seed DB
     
 // All routes
 
@@ -54,5 +54,3 @@ app.use("/", indexRoutes);
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("YelpCamp Server Has Started!!!");
 });
-
-

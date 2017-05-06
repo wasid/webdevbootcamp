@@ -28,6 +28,9 @@ router.post("/", isSingedin, function(req, res){
                     if (err) {
                         console.log(err);
                     } else {
+                        createdcomment.author.id = req.user._id;
+                        createdcomment.author.username = req.user.username;
+                        createdcomment.save();
                         campground.comments.push(createdcomment);
                         campground.save();
                         res.redirect("/campgrounds/" + campground._id);
