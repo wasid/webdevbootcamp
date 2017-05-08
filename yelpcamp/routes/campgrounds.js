@@ -67,7 +67,7 @@ router.get("/:id", function(req, res){
 });
 
 // edit route
-router.get("/:id/edit", function(req, res){
+router.get("/:id/edit", checkCampOwner, function(req, res){
     
     var id = req.params.id;
     Campground.findById(id, function(err, geteditinfo){
@@ -82,7 +82,7 @@ router.get("/:id/edit", function(req, res){
 
 // update/PUT route
 
-router.put("/:id", function(req, res){
+router.put("/:id", checkCampOwner, function(req, res){
     
     var id = req.params.id;
     // req.body.campground.info = req.sanitize(req.body.campground.info)
@@ -98,7 +98,7 @@ router.put("/:id", function(req, res){
 
 // Delete/Destroy Route
 
-router.delete("/:id", function(req, res){
+router.delete("/:id", checkCampOwner, function(req, res){
     
     var id = req.params.id;
 
@@ -118,6 +118,25 @@ function isSingedin(req, res, next){
     if (req.isAuthenticated()) {
         return next();
     } else {
+        res.redirect("/login");
+    }
+}
+
+function checkCampOwner(req, res, next){
+    if(req.isAuthenticated()){
+        Campground.findById(req.params.id, function(err, geteditinfo) {
+           if (err) {
+               res.redirect("back");
+           } else {
+               
+                  if (geteditinfo.author.id.equals(req.user._id)) {
+                      next();
+                  } else {
+                        res.redirect("back");
+                  }
+           } 
+        });
+    } else{
         res.redirect("/login");
     }
 }
