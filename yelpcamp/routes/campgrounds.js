@@ -96,6 +96,22 @@ router.put("/:id", function(req, res){
     
 });
 
+// Delete/Destroy Route
+
+router.delete("/:id", function(req, res){
+    
+    var id = req.params.id;
+
+    Campground.findByIdAndRemove( id, function(err){
+            if (err) {
+                res.redirect("/campgrounds");
+            } else {
+                res.redirect("/campgrounds");
+            }
+    });
+  
+});
+
 // Custom Middleware Function
 
 function isSingedin(req, res, next){

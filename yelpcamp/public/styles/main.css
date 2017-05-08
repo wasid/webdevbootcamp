@@ -13,3 +13,7 @@ body{
 .thumbnail img{
     width: 100%;
 }
+
+#del_form{
+  display: inline;
+}
