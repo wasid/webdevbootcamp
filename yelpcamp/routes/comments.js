@@ -42,19 +42,11 @@ router.post("/", isSingedin, function(req, res){
 
 // Edit Comment
 
-router.get("/:comment_id/edit", function(req, res){
+router.get("/:comment_id/edit", checkCommentOwner, function(req, res){
     
     var camp_id = req.params.id;
     var comment_id = req.params.comment_id;
-    
-    // Campground.findById(camp_id, function(err, campground){
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
 
-    //         }
-    // });
-    
     Comment.findById(comment_id, function(err, getcomment){
         if (err) {
             console.log(err);
@@ -67,19 +59,11 @@ router.get("/:comment_id/edit", function(req, res){
 
 // update/PUT route
 
-router.put("/:comment_id", function(req, res){
+router.put("/:comment_id", checkCommentOwner, function(req, res){
     
     var camp_id = req.params.id;
     var comment_id = req.params.comment_id;
     var comment = req.body.comment;
-    
-    // Campground.findById(camp_id, function(err, campground){
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-
-    //         }
-    // });
 
     // req.body.comment.text = req.sanitize(req.body.comment.text)
     Comment.findByIdAndUpdate( comment_id, comment, function(err, updatedComment){
@@ -91,12 +75,49 @@ router.put("/:comment_id", function(req, res){
     });
 });
 
+
+// Delete/Destroy Route
+
+router.delete("/:comment_id", checkCommentOwner, function(req, res){
+    
+    var camp_id = req.params.id;
+    var id = req.params.comment_id;
+
+    Comment.findByIdAndRemove( id, function(err){
+           if (err) {
+                res.redirect("back");
+            } else {
+                res.redirect("/campgrounds/" + camp_id);
+            }
+    });
+  
+});
+
 // Custom Middleware Function
 
 function isSingedin(req, res, next){
     if (req.isAuthenticated()) {
         return next();
     } else {
+        res.redirect("/login");
+    }
+}
+
+function checkCommentOwner(req, res, next){
+    if(req.isAuthenticated()){
+        Comment.findById(req.params.comment_id, function(err, getupdatetinfo) {
+           if (err) {
+               res.redirect("back");
+           } else {
+               
+                  if (getupdatetinfo.author.id.equals(req.user._id)) {
+                      next();
+                  } else {
+                        res.redirect("back");
+                  }
+           } 
+        });
+    } else{
         res.redirect("/login");
     }
 }

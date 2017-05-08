@@ -14,6 +14,6 @@ body{
     width: 100%;
 }
 
-#del_form{
+.del_form{
   display: inline;
 }
