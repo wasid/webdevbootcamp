@@ -3,6 +3,7 @@ var express               = require("express"),
 
     mongoose              = require("mongoose"),
     bodyParser            = require("body-parser"),
+    methodOverride        = require("method-override"),
     
     User                  = require("./models/user"),
 
@@ -26,6 +27,7 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 app.set("view engine", "ejs");  // view 
 app.use(bodyParser.urlencoded({extended: true})); // Form submit data
 app.use(express.static(__dirname + "/public")); // for custom style
+app.use(methodOverride("_method")); // for covering put method to maintain REST route
 
 // Passport Config
 app.use(require("express-session")({

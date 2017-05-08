@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+
+<div class="row text-center">
+        <div class="col-md-4 col-md-offset-4">
+        <h1>Edit <%= fetchcampinfo.name %></h1>
+        <form action="/campgrounds/<%= fetchcampinfo._id %>?_method=PUT" method="post">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="campground[name]" value="<%= fetchcampinfo.name %>">    
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="campground[image]" value="<%= fetchcampinfo.image %>">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="campground[info]"><%= fetchcampinfo.info %></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Update Campground!</button>
+                </div>
+        </form>
+    </div>
+</div>
+
+<% include ../partials/footer %>
