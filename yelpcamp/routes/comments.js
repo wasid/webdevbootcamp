@@ -40,6 +40,56 @@ router.post("/", isSingedin, function(req, res){
     });
 });
 
+// Edit Comment
+
+router.get("/:comment_id/edit", function(req, res){
+    
+    var camp_id = req.params.id;
+    var comment_id = req.params.comment_id;
+    
+    // Campground.findById(camp_id, function(err, campground){
+    //         if (err) {
+    //             console.log(err);
+    //         } else {
+
+    //         }
+    // });
+    
+    Comment.findById(comment_id, function(err, getcomment){
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("comments/edit", {campinfo_id: camp_id, fetchcomment: getcomment});
+        }
+    });
+
+});
+
+// update/PUT route
+
+router.put("/:comment_id", function(req, res){
+    
+    var camp_id = req.params.id;
+    var comment_id = req.params.comment_id;
+    var comment = req.body.comment;
+    
+    // Campground.findById(camp_id, function(err, campground){
+    //         if (err) {
+    //             console.log(err);
+    //         } else {
+
+    //         }
+    // });
+
+    // req.body.comment.text = req.sanitize(req.body.comment.text)
+    Comment.findByIdAndUpdate( comment_id, comment, function(err, updatedComment){
+            if (err) {
+                res.redirect("back");
+            } else {
+                res.redirect("/campgrounds/" + camp_id);
+            }
+    });
+});
 
 // Custom Middleware Function
 
