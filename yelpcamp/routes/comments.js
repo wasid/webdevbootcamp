@@ -1,11 +1,12 @@
 var express               = require("express"),
     router                = express.Router({mergeParams: true}),
     Campground            = require("../models/campground"),
-    Comment               = require("../models/comment");
+    Comment               = require("../models/comment"),
+    middleware            = require("../middleware");
 
 // Comment Route
 // New Comment
-router.get("/new", isSingedin, function(req, res){
+router.get("/new", middleware.isSingedin, function(req, res){
     var id = req.params.id;
     Campground.findById(id, function(err, campground){
             if (err) {
@@ -17,7 +18,7 @@ router.get("/new", isSingedin, function(req, res){
 });
 
 // Create Comment
-router.post("/", isSingedin, function(req, res){
+router.post("/", middleware.isSingedin, function(req, res){
     var id = req.params.id;
     var comment = req.body.comment;
     Campground.findById(id, function(err, campground){
@@ -42,7 +43,7 @@ router.post("/", isSingedin, function(req, res){
 
 // Edit Comment
 
-router.get("/:comment_id/edit", checkCommentOwner, function(req, res){
+router.get("/:comment_id/edit", middleware.checkCommentOwner, function(req, res){
     
     var camp_id = req.params.id;
     var comment_id = req.params.comment_id;
@@ -59,7 +60,7 @@ router.get("/:comment_id/edit", checkCommentOwner, function(req, res){
 
 // update/PUT route
 
-router.put("/:comment_id", checkCommentOwner, function(req, res){
+router.put("/:comment_id", middleware.checkCommentOwner, function(req, res){
     
     var camp_id = req.params.id;
     var comment_id = req.params.comment_id;
@@ -78,7 +79,7 @@ router.put("/:comment_id", checkCommentOwner, function(req, res){
 
 // Delete/Destroy Route
 
-router.delete("/:comment_id", checkCommentOwner, function(req, res){
+router.delete("/:comment_id", middleware.checkCommentOwner, function(req, res){
     
     var camp_id = req.params.id;
     var id = req.params.comment_id;
@@ -92,34 +93,5 @@ router.delete("/:comment_id", checkCommentOwner, function(req, res){
     });
   
 });
-
-// Custom Middleware Function
-
-function isSingedin(req, res, next){
-    if (req.isAuthenticated()) {
-        return next();
-    } else {
-        res.redirect("/login");
-    }
-}
-
-function checkCommentOwner(req, res, next){
-    if(req.isAuthenticated()){
-        Comment.findById(req.params.comment_id, function(err, getupdatetinfo) {
-           if (err) {
-               res.redirect("back");
-           } else {
-               
-                  if (getupdatetinfo.author.id.equals(req.user._id)) {
-                      next();
-                  } else {
-                        res.redirect("back");
-                  }
-           } 
-        });
-    } else{
-        res.redirect("/login");
-    }
-}
 
 module.exports = router;
