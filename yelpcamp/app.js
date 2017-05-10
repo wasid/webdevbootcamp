@@ -2,6 +2,7 @@ var express               = require("express"),
     app                   = express(),
 
     mongoose              = require("mongoose"),
+    flash              = require("connect-flash"),
     bodyParser            = require("body-parser"),
     methodOverride        = require("method-override"),
     
@@ -28,6 +29,7 @@ app.set("view engine", "ejs");  // view
 app.use(bodyParser.urlencoded({extended: true})); // Form submit data
 app.use(express.static(__dirname + "/public")); // for custom style
 app.use(methodOverride("_method")); // for covering put method to maintain REST route
+app.use(flash()); // for flash messages
 
 // Passport Config
 app.use(require("express-session")({

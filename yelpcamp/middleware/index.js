@@ -20,6 +20,7 @@ middlewareObj.checkCampOwner = function (req, res, next){
            } 
         });
     } else{
+        req.flash('error', 'Please Login First!');
         res.redirect("/login");
     }
 };
@@ -39,6 +40,7 @@ middlewareObj.checkCommentOwner = function (req, res, next){
            } 
         });
     } else{
+        req.flash('error', 'Please Login First!');
         res.redirect("/login");
     }
 };
@@ -47,6 +49,7 @@ middlewareObj.isSingedin = function (req, res, next){
     if (req.isAuthenticated()) {
         return next();
     } else {
+        req.flash('error', 'Please Login First!');
         res.redirect("/login");
     }
 };
