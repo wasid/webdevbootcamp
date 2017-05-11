@@ -48,17 +48,13 @@ var seedDB = function(){
                                             console.log(addedcomment);
                                             
                                         }
-                                    })
+                                    });
                                 }
-                            })
-                    
-                    
-                
-                
+                            });
                 }
-            })
-        })
-    })
-}
+            });
+        });
+    });
+};
 
 module.exports = seedDB;

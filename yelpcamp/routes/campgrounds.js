@@ -23,13 +23,14 @@ router.get("/", function(req, res){
 router.post("/", middleware.isSingedin, function(req, res){
     
     var name = req.body.name;
+    var price = req.body.price;
     var image = req.body.image;
     var info = req.body.info;
     var author = {
         id: req.user._id,
         username: req.user.username
     }
-    var newCamp = {name:name, image:image, info:info, author:author};
+    var newCamp = {name:name, price:price, image:image, info:info, author:author};
     Campground.create( newCamp, function(err, addedcamp){
             if (err) {
                 req.flash('error', err.message);

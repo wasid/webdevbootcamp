@@ -17,7 +17,7 @@
         <div class="thumbnail">
             <img clas="img-responsive" src="<%= campinfo.image %>">
             <div class="caption-full">
-                <h4 class="pull-right">$9.00/night</h4>    
+                <h4 class="pull-right">$<%= campinfo.price %>/night</h4>    
                 <h4><a><%= campinfo.name %></a></h4>
                     <% if(loggedinuser && campinfo.author.id.equals(loggedinuser._id)) { %>
                         <a class="btn btn-warning btn-xs "href="/campgrounds/<%= campinfo._id %>/edit">Edit</a>
