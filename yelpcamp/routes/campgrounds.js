@@ -9,7 +9,6 @@ router.get("/", function(req, res){
     
     Campground.find({}, function(err, allcamp){
          if (err) {
-            console.log("Failed to fetch campgrounds data from the DB!");
             console.log(err);
         } else {
             res.render("campgrounds/index", {campgrounds: allcamp});
@@ -36,7 +35,6 @@ router.post("/", middleware.isSingedin, function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                console.log("Campground saved to the DB!");
                 res.redirect("/campgrounds");
             }
     });
@@ -59,7 +57,7 @@ router.get("/:id", function(req, res){
     var id = req.params.id;
     Campground.findById(id).populate("comments").exec(function(err, getinfo){
             if (err) {
-                console.log("Failed to get Campground info!");
+                console.log(err);
             } else {
                 res.render("campgrounds/show", {campinfo: getinfo});
             }

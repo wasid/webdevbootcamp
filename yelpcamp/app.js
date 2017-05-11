@@ -2,7 +2,7 @@ var express               = require("express"),
     app                   = express(),
 
     mongoose              = require("mongoose"),
-    flash              = require("connect-flash"),
+    flash                 = require("connect-flash"),
     bodyParser            = require("body-parser"),
     methodOverride        = require("method-override"),
     
@@ -41,9 +41,12 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Passing logged in user to every routes
+// Passing data to every routes
 app.use(function(req, res, next){
     res.locals.loggedinuser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.info = req.flash('info');
+    res.locals.error = req.flash('error');
     next();
 });
 
