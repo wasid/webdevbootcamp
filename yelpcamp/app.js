@@ -46,6 +46,7 @@ app.use(function(req, res, next){
     res.locals.loggedinuser = req.user;
     res.locals.success = req.flash('success');
     res.locals.info = req.flash('info');
+    res.locals.warning = req.flash('warning');
     res.locals.error = req.flash('error');
     next();
 });

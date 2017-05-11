@@ -25,11 +25,11 @@ router.post("/register", function(req, res){
 
     User.register(newusername, newpassword, function(err, user){
         if (err) {
-            console.log(err);
+            req.flash('error', err.message);
             return res.redirect("/register");
         } else {
             passport.authenticate("local")(req, res,  function(){
-                req.flash('info', 'Welcome to YelpCamp!');
+                req.flash('info', 'Welcome to YelpCamp! '+ user.username);
                 res.redirect("/campgrounds");
             });
         }
@@ -42,17 +42,41 @@ router.get("/login", function(req, res){
 });
 
 // Handle Log in
-// middleware
-router.post("/login", passport.authenticate("local", {
-        successRedirect: "/campgrounds",
-        failureRedirect: "/login"
-    }), function(req, res){
+
+// router.post("/login", passport.authenticate("local", {
+//         successRedirect: "/campgrounds",
+//         failureRedirect: "/login",
+//         successFlash:   "Welcome Back!",
+//         failureFlash:   true
+//     }), function(req, res){
+// });
+
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    
+    if (err) {
+        req.flash("error", err.message);
+        return next(err); 
+    }
+    if (!user) { 
+        req.flash("error", "Invalid email or password!");
+        return res.redirect('/login'); 
+    }
+    req.logIn(user, function(err) {
+      if (err) { 
+          req.flash("error", err.message);
+          return next(err); 
+      }
+      req.flash("success", "Welcome back to YelpCamp " + user.username);
+      res.redirect('/campgrounds');
+    });
+  })(req, res, next);
 });
 
 // Log Out
 router.get("/logout", function(req, res){
     req.logout();
-    req.flash('success', 'See you soon!');
+    req.flash('info', 'See you soon!');
     res.redirect("/campgrounds");
 });
 
